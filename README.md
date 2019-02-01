@@ -41,7 +41,7 @@ The soon to be released version 0.19 of [JuMP](https://github.com/JuliaOpt/JuMP.
 
 - Basic knowledge of JuMP v0.19
 - Basic knowledge of mathematical optimization models and methods
-- Basic knowledge of notebook-related tools like [Weave](https://github.com/mpastell/Weave.jl).
+- Basic knowledge of notebook-related tools like [Weave](https://github.com/mpastell/Weave.jl)
 
 #### First steps
 
