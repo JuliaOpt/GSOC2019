@@ -17,6 +17,40 @@ JuMP is a modeling interface and a collection of supporting packages for mathema
 
 ## Project Ideas
 
+###  Solver Tests and Benchmarks 
+
+#### Abstract
+
+MathOptInterface is a very general way of representing a mathematical optimization problem. This project will develop infrastructure to test the correctness of, and benchmark, MathOptInterface-compatible solvers in Julia.
+
+
+| **Intensity**                          | **Priority**              | **Involves**  | **Mentors**              |
+| -------------                          | ------------              | ------------- | -----------              |
+| Moderate  |  Medium  | Converting existing benchmark libraries into MathOptFormat. Developing infrastructure to make testing and benchmarking MathOptInterface-compatible solvers easy.         | [Chris Coey](https://github.com/chriscoey), [Carleton Coffrin](https://github.com/ccoffrin) and [Oscar Dowson](https://github.com/odow) |
+
+#### Technical Details
+
+The generality of [MathOptInterface’s standard form](http://www.juliaopt.org/MathOptInterface.jl/dev/apimanual/) enables it to model problems that cannot be written down in existing file-formats for optimization models (e.g., a mixed-integer problem with both NLP and conic constraints). To overcome this problem, a new file format is under development, [MathOptFormat](https://github.com/odow/MathOptFormat.jl). By converting existing benchmark libraries of optimization models into MathOptFormat, we can have a centralized and diverse library of models for testing and benchmarking Julia solvers that are hooked into MathOptInterface. 
+The main goals of this project are to:
+- Automate the conversion of existing benchmark libraries such as [CBLib](http://cblib.zib.de/) and [MINLPLib](http://www.minlplib.org/) into MathOptFormat
+- Make this library accessible online
+- Develop Julia infrastructure to make downloading, reading, and running these MathOptFormat instances easy for the purpose of testing and benchmarking optimization solvers in Julia
+- Extend/improve [MathOptFormat](https://github.com/odow/MathOptFormat.jl) as necessary
+
+
+#### Helpful Experience
+
+- Basic knowledge of JuMP v0.19
+- Prior work with optimization solvers
+- Experience with testing or benchmarking numerical code
+
+
+#### First steps
+
+- Become familiar with [MathOptFormat](https://github.com/odow/MathOptFormat.jl) and various standard file formats for optimization models such as .MPS, .CBF, .NL, and .LP
+- Become familiar with testing and benchmarking tools in Julia
+- Become familiar with current testing and benchmarking infrastructure in [JuMP](https://github.com/JuliaOpt/JuMP.jl) and [MathOptInterface](https://github.com/JuliaOpt/MathOptInterface.jl), solvers such as [Pajarito](https://github.com/JuliaOpt/Pajarito.jl), and [MINLPLibJuMP](https://github.com/lanl-ansi/MINLPLibJuMP.jl) and [PowerModels](https://github.com/lanl-ansi/PowerModels.jl)
+
 ###  New and Updated Example Notebooks 
 
 #### Abstract
