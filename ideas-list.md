@@ -17,7 +17,7 @@ JuMP is a modeling interface and a collection of supporting packages for mathema
 
 ## Project Ideas
 
-###  Solver Tests and Benchmarks 
+###  Solver Tests and Benchmarks
 
 #### Abstract
 
@@ -30,7 +30,7 @@ MathOptInterface is a very general way of representing a mathematical optimizati
 
 #### Technical Details
 
-The generality of [MathOptInterface’s standard form](http://www.juliaopt.org/MathOptInterface.jl/dev/apimanual/) enables it to model problems that cannot be written down in existing file-formats for optimization models (e.g., a mixed-integer problem with both NLP and conic constraints). To overcome this problem, a new file format is under development, [MathOptFormat](https://github.com/odow/MathOptFormat.jl). By converting existing benchmark libraries of optimization models into MathOptFormat, we can have a centralized and diverse library of models for testing and benchmarking Julia solvers that are hooked into MathOptInterface. 
+The generality of [MathOptInterface’s standard form](http://www.juliaopt.org/MathOptInterface.jl/dev/apimanual/) enables it to model problems that cannot be written down in existing file-formats for optimization models (e.g., a mixed-integer problem with both NLP and conic constraints). To overcome this problem, a new file format is under development, [MathOptFormat](https://github.com/odow/MathOptFormat.jl). By converting existing benchmark libraries of optimization models into MathOptFormat, we can have a centralized and diverse library of models for testing and benchmarking Julia solvers that are hooked into MathOptInterface.
 The main goals of this project are to:
 - Automate the conversion of existing benchmark libraries such as [CBLib](http://cblib.zib.de/) and [MINLPLib](http://www.minlplib.org/) into MathOptFormat
 - Make this library accessible online
@@ -51,7 +51,7 @@ The main goals of this project are to:
 - Become familiar with testing and benchmarking tools in Julia
 - Become familiar with current testing and benchmarking infrastructure in [JuMP](https://github.com/JuliaOpt/JuMP.jl) and [MathOptInterface](https://github.com/JuliaOpt/MathOptInterface.jl), solvers such as [Pajarito](https://github.com/JuliaOpt/Pajarito.jl), and [MINLPLibJuMP](https://github.com/lanl-ansi/MINLPLibJuMP.jl) and [PowerModels](https://github.com/lanl-ansi/PowerModels.jl)
 
-###  New and Updated Example Notebooks 
+###  New and Updated Example Notebooks
 
 #### Abstract
 
@@ -84,3 +84,54 @@ The soon to be released version 0.19 of [JuMP](https://github.com/JuliaOpt/JuMP.
 - Become familiar with tools like [Weave](https://github.com/mpastell/Weave.jl)
 - Make a small update to an existing notebook or develop a simple new notebook, and submit a pull request to [PolyJuMP](https://github.com/JuliaOpt/PolyJuMP.jl) on Github
 - Explore JuMP extensions such as [PolyJuMP](https://github.com/JuliaOpt/PolyJuMP.jl)
+
+
+### Experiments with Automatic Differentiation (AD) Backends for JuMP
+
+#### Abstract
+
+JuMP's Automatic Differentiation (AD) library for computing derivatives of
+nonlinear models was written before the recent emergence of advanced AD
+libraries in Julia. JuMP's AD imposes a number of
+[syntax limitations](http://www.juliaopt.org/JuMP.jl/0.18/nlp.html#syntax-notes)
+that are difficult to address within the current framework. Performance could
+also be improved. Hence, we would like to explore whether other libraries have
+the potential to integrate with JuMP as replacement AD backends.
+
+Mentors: [Miles Lubin](https://github.com/mlubin) and
+[Juan Pablo Vielma](https://github.com/juan-pablo-vielma)
+
+#### Technical Details
+
+The goal of this project is to evaluate if existing AD libraries in Julia can
+serve as replacements for JuMP's AD. This involves implementing benchmarks for
+gradient and Hessian computations in multiple backends and comparing performance
+and functionality.
+
+Stretch goals:
+- A prototype translation layer between JuMP and a new AD backend, or
+- A frontend to [MOI](https://github.com/JuliaOpt/MathOptInterface.jl) nonlinear
+  solvers using a different AD backend.
+
+
+#### Helpful Experience
+
+- Familiarity with JuMP’s non-linear optimization interface
+- Familiarity with some of Julia’s Automatic Differentiation libraries
+  including:
+  - [Cassette](https://github.com/jrevels/Cassette.jl)
+  - [ChainRules](https://github.com/JuliaDiff/ChainRules.jl)
+  - [Flux](https://github.com/FluxML)
+  - [Zygote](https://github.com/FluxML/Zygote.jl)
+  - [ForwardDiff](https://github.com/JuliaDiff/ForwardDiff.jl)
+  - [ReverseDiff](https://github.com/JuliaDiff/ReverseDiff.jl)
+  - [Nabla](https://github.com/invenia/Nabla.jl)
+
+#### First steps
+
+- Watch Miles's [JuliaCon talk](https://youtu.be/xtfNug-htcs) on JuMP's AD
+- Read Section 5 of the [JuMP paper](https://mlubin.github.io/pdf/jump-sirev.pdf)
+- Update `acpower` and `clnlbeam`
+  [benchmarks](https://github.com/mlubin/JuMPSupplement) for JuMP 0.19.
+- Implement these two benchmarks in another Julia AD library for comparison of
+  performance.
