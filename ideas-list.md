@@ -135,3 +135,69 @@ Stretch goals:
   [benchmarks](https://github.com/mlubin/JuMPSupplement) for JuMP 0.19.
 - Implement these two benchmarks in another Julia AD library for comparison of
   performance.
+
+###  MutableArithmetics
+
+#### Abstract
+
+Create a MutableArithmetics (MA) package in which mutable versions of the arithmetic operations are defined. This package allows 1) for mutable types to implement a mutable arithmetics 2) for algorithms that could exploit mutable arithmetics to exploit it while still being completely generic.
+
+| **Intensity** | **Priority** | **Involves**  | **Mentors**              |
+| ------------- | ------------ | ------------- | -----------              |
+| Hard          |  Medium      | Creating/documenting/testing a new API. Benchmarking code. | [Benoît Legat](https://github.com/blegat) and [Sascha Timme](https://github.com/saschatimme) |
+
+#### Technical Details
+
+Julia define standard arithmetic functions such as `+`, `-`, `*`, `/`, …
+which allows generic code to be usable by any type implementing the appropriate methods.
+For instance, `sum(::Vector{T})` works as long as `+(::T, ::T)` is defined.
+However, this generic implementation relying on `+` may not be optimal if `T` is a mutable type.
+For instance, if `T` is `JuMP.VariableRef`, and the vector has length `n`,
+the generic `sum` will allocate intermediate affine expressions of length 2, 3, 4, …, `n`
+resulting in `O(n^2)` complexity.
+For this reason, a [specialized method is defined in JuMP for summing affine expressions](https://github.com/JuliaOpt/JuMP.jl/blob/f46a461c126fd1a7c309fb773a00b5dc529632b9/src/operators.jl#L304-L310)
+that creates an empty affine expression and mutates its by adding each expression in the sum using `JuMP.add_to_expression!`.
+This method has `O(n)` complexity for summing `n` variables.
+The need for such specified methods is not specific for JuMP and is in general required for any mutable type,
+see for instance the [`sum` method for `BigInt`](https://github.com/JuliaLang/julia/blob/d4018df968019d38943cd5009fe469f1e97ba0b6/base/gmp.jl#L549) which uses `MPZ.add!` to accumulate the sum in the same `BigInt`.
+Because there is no standardized function for summing two object and allowing to mutate the first one,
+mutable types have to create specific methods (such as `JuMP.add_to_expression!` or `MPZ.add!`) and reimplement a specific method for each function that can take advantage of its mutability (such as `sum`).
+In JuMP, the mutating ability of its affine and quadratic expressions are exploited in two ways:
+
+- First, specialized methods for standard Base functions are implemented in `src/operators.jl` such as `sum`, matrix products, …
+- Second, when written inside a JuMP macro such as `@constraint`, an expression such as `3x + 2y + z - u + w` is rewritten to use a mutating function `JuMP.destructive_add!` (see `src/parse_expr.jl`).
+
+While this covers most use cases,
+it does not allow generic algorithms to take advantage of the mutability of JuMP expressions as it needs to use either `JuMP.add_to_expression!` or `JuMP.destructive_add!`.
+For instance, when the coefficients of polynomials are JuMP expressions,
+the generic operations defined in the https://github.com/JuliaAlgebra/ packages are suboptimal.
+Moreover, the rewritting rules used in the JuMP macro does not exploit the mutability of mutable types such as polynomials.
+Therefore in `3x + 2y + z - u + w`, if `x`, `y`, `z`, `u` and `w` are polynomials,
+as they do not implement `JuMP.add_to_expression!` or `JuMP.destructive_add!`,
+the rewritting with fallback to using the non-mutating `+`.
+In this project, a MutableArithmetics (MA) package is created in which mutable versions of the arithmetic operations are defined.
+This package allows
+
+1. for mutable types to implement a mutable arithmetics
+2. for algorithms that could exploit mutable arithmetics to exploit it while still being completely generic.
+
+The student will be asked to complete some of the following tasks after creating the MA package
+
+- Implement the MA API in MOIU and JuMP
+- Use the MA API in JuMP.parseExpr instead of JuMP.destructive_add
+- Implement the MA API for mutable types in Base such as BigInt in MA (so that MA could tests itself).
+- Use MA in MultivariatePolynomials/DynamicPolynomials/TypedPolynomials: This would allow polynomial operation to be more efficient when the element type is BigInt, MOI functions or JuMP functions.
+- Implement MA for MultivariatePolynomials/DynamicPolynomials/TypedPolynomials: This would allow polynomial arithmetics to be done efficiently in JuMP macros.
+- Move JuMP.parseExpr and related code to MA, it should be able to define an “@expression(expr)” macro that replace “expr” with an equivalent expression which use MA instead of allocating many intermediate results. Example: @expression(a + b + c) would be rewritten as “res = copy(a); operate!(+, res, b); operate!(+, res, c)”.
+  This would allow types that implement the MA API to benefit from this feature.
+
+#### Helpful Experience
+
+- Notions of computational complexity. Basic knowledge on Benchmarking
+- Familiarity with JuMP representation of affine and quadratic expressions
+- Familiarity with https://github.com/JuliaAlgebra/MultivariatePolynomials.jl
+
+#### First steps
+
+- Write simple benchmarks with https://github.com/JuliaAlgebra/MultivariatePolynomials.jl and JuMP/MOI which would benefit from MA
+- Read performance tips https://docs.julialang.org/en/v1/manual/performance-tips/index.html
