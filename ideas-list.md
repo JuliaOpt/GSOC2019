@@ -210,7 +210,7 @@ Sometimes solving the dual of an optimization problem is faster than solving the
 
 | **Intensity** | **Priority** | **Involves**  | **Mentors**              |
 | ------------- | ------------ | ------------- | -----------              |
-| Moderate      |  Medium      | Writing [MOI](https://github.com/JuliaOpt/MthOptInterface.jl) code. Using duality theory in optimization. | [Chris Coey](https://github.com/chriscoey) [Joaquim Dias Garcia](https://github.com/joaquimg) [Benoît Legat](https://github.com/blegat) |
+| Moderate      |  Medium      | Writing [MOI](https://github.com/JuliaOpt/MathOptInterface.jl) code. Using duality theory in optimization. | [Chris Coey](https://github.com/chriscoey) [Joaquim Dias Garcia](https://github.com/joaquimg) [Benoît Legat](https://github.com/blegat) |
 
 #### Technical Details
 
