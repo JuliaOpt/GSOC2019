@@ -201,3 +201,36 @@ The student will be asked to complete some of the following tasks after creating
 
 - Write simple benchmarks with https://github.com/JuliaAlgebra/MultivariatePolynomials.jl and JuMP/MOI which would benefit from MA
 - Read performance tips https://docs.julialang.org/en/v1/manual/performance-tips/index.html
+
+###  Automatic Dualization
+
+#### Abstract
+
+Sometimes solving the dual of an optimization problem is faster than solving the original problem. The goal of this project is to create a tool similar to the [automatic dualization features in YALMIP](https://yalmip.github.io/tutorial/automaticdualization/).
+
+| **Intensity** | **Priority** | **Involves**  | **Mentors**              |
+| ------------- | ------------ | ------------- | -----------              |
+| Moderate      |  Medium      | Writing [MOI](https://github.com/JuliaOpt/MthOptInterface.jl) code. Using duality theory in optimization. | [Chris Coey](https://github.com/chriscoey) [Joaquim Dias Garcia](https://github.com/joaquimg) [Benoît Legat] (https://github.com/blegat) |
+
+#### Technical Details
+
+Duality [plays a central role in optimization in optimization](http://web.stanford.edu/~boyd/cvxbook/).
+For many solvers, the primal and dual form are different and it sometimes
+renders the problem easier to solve if it is converted into the dual form
+see the [automatic dualization features in YALMIP](https://yalmip.github.io/tutorial/automaticdualization/).
+
+Moreover, there are applications that require solving the KKT conditions for an optimization problem.
+This is the case of multilevel optimization, in which some constraints of an optimization problem include another optimization problem.
+Many classes of problems in [Extended Mathematical Programming](https://www.gams.com/latest/docs/UG_EMP.html) (EMP) such as MPECs,
+EPECs and so on, can be easily modeled if the KKT conditions can be automatically obtained from the primal problem.
+(https://www.gams.com/latest/docs/UG_EMP.html, https://github.com/xhub/EMP.jl)
+
+#### Helpful Experience
+
+- Basic knowledge of JuMP v0.19 and MOI
+- Understanding of basic duality theory for linear and conic optimization
+- Basic knowledge of mathematical optimization models and methods
+
+#### First steps
+
+- Become familiar with [MathOptInterface’s standard form](http://www.juliaopt.org/MathOptInterface.jl/dev/apimanual/)
