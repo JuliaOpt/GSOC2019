@@ -119,14 +119,18 @@ Stretch goals:
 - Familiarity with JuMP’s non-linear optimization interface
 - Familiarity with some of Julia’s Automatic Differentiation libraries
   including:
-  - [Cassette](https://github.com/jrevels/Cassette.jl)
-  - [ChainRules](https://github.com/JuliaDiff/ChainRules.jl)
-  - [Flux](https://github.com/FluxML)
+  
+  - [Flux](https://github.com/FluxML) / [Tracker](https://github.com/FluxML/Tracker.jl)
   - [Zygote](https://github.com/FluxML/Zygote.jl)
   - [ForwardDiff](https://github.com/JuliaDiff/ForwardDiff.jl)
-  - [ReverseDiff](https://github.com/JuliaDiff/ReverseDiff.jl)
   - [Nabla](https://github.com/invenia/Nabla.jl)
+  - [ReverseDiff](https://github.com/JuliaDiff/ReverseDiff.jl)
 
+  
+ Its is also useful to know about:
+  - [Cassette](https://github.com/jrevels/Cassette.jl)
+  - [ChainRules](https://github.com/JuliaDiff/ChainRules.jl)
+  
 #### First steps
 
 - Watch Miles's [JuliaCon talk](https://youtu.be/xtfNug-htcs) on JuMP's AD
